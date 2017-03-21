@@ -87,7 +87,7 @@ class textrank(pika):
         for i in range(0,k):
             print(self.res[i][0])
 if __name__=='__main__':
-    t=textrank("text")
+    t=textrank(sys.argv[1])
     t.build_graph()
     #t.print_graph()
     #t.prt()
