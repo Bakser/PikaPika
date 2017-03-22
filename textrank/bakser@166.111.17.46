@@ -2,15 +2,15 @@
 import sys
 import thulac
 class pika:
-    types={'n','np','ns','ni','nz','j','a'}
+    types={'n','np','ns','ni','nz','j','a','t','f','s'}
     thu_cut=thulac.thulac()
     def __init__(self,nm):
         fin=open(nm,'r')
         self.text=fin.read()
         fin.close()
     def cut_words(self):
-        wordslistpre=self.thu_cut.cut(self.text)
-        self.wordslist=[x[0] for x in wordslistpre if x[1] in self.types]
+        self.wordslistpre=self.thu_cut.cut(self.text)
+        self.wordslist=[x[0] for x in self.wordslistpre if x[1] in self.types]
     def cut_sectences(self):
         last=0
         cnt=0
@@ -37,16 +37,13 @@ class pika:
     def __str__(self):
         return str(self.text)
 class textrank(pika):
-    slides_width=3
-    damping=0.85
-    iteration_times=300
-    result_numbers=5
     def __init__(self,nm):
         super().__init__(nm)
-    def build_graph(self,cutlist):
-        K=self.slides_width
+        super().cut_sectences()
+    def build_graph(self):
+        K=11
         self.G=dict()
-        for s in cutlist:
+        for s in self.cut_s:
             for i in range(0,len(s)):
                 p=s[i]
                 if not p in self.G:
@@ -60,22 +57,20 @@ class textrank(pika):
         for i in self.G:
             print(i,':',self.G[i].items())
     def calc(self,source,dest):
-        d=self.damping
+        d=0.85
         for i in dest:
             dest[i]=1.0-d
         for u in self.G:
             tot=0.0
             for v in self.G[u]:
                 tot+=self.G[u][v]
-            if tot==0.0:
-                continue
             tot=source[u]*d/tot
             for v in self.G[u]:
                 dest[v]+=self.G[u][v]*tot
-    def evaluate(self,cutlist):
-        tot=self.iteration_times
+    def evaluate(self):
+        tot=100
         self.val=[dict(),dict()]
-        for i in cutlist:
+        for i in self.cut_s:
             for j in i:
                 if not j in self.val[0]:
                     self.val[0][j]=1.0
@@ -87,20 +82,14 @@ class textrank(pika):
             self.calc(self.val[now],self.val[now^1])
             now^=1
         self.res=sorted(self.val[now^1].items(),key=lambda x:x[1],reverse=True)
-    def init(self,sentences=True):
-        if sentences:
-            self.cut_sectences()
-            self.build_graph(self.cut_s)
-            self.evaluate(self.cut_s)
-        else:
-            self.cut_words()
-            self.build_graph(self.wordslist)
-            self.evaluate(self.wordslist)
     def query(self):
-        k=self.result_numbers
+        k=10
         for i in range(0,k):
-            print(self.res[i])
+            print(self.res[i][0])
 if __name__=='__main__':
     t=textrank(sys.argv[1])
-    t.init()
+    t.build_graph()
+    #t.print_graph()
+    #t.prt()
+    t.evaluate()
     t.query()
