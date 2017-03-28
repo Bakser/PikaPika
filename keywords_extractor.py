@@ -1,7 +1,7 @@
 #coding:utf-8
 import re
 import thulac
-from wiki_analyzer.wiki_searcher import WikiSearcher
+from wiki_analyzer.wiki_searcher import WikiSearcher,WikiSearcher_online
 
 class KeywordsMiner:
     def __init__(self,filename):
@@ -55,13 +55,17 @@ class KeywordsMiner:
                 update.append(w)
             else:
                 print(w,"Bad!")
+                continue
+            tt = WikiSearcher_online().get_links(w)
+            for w2 in self.keywords:
+                if (w2 in tt):
+                    print(w,w2)
         self.keywords = update
 
     def print_keywords(self):
         for w in self.keywords:
-            print(w,end=',')
+            print(w,end='\n')
         print()
-
 
 if __name__ == '__main__':
     AM = KeywordsMiner('input.txt')
@@ -69,5 +73,5 @@ if __name__ == '__main__':
     AM.print_keywords()
     AM.wiki_check()
     AM.print_keywords()
+    AM.link_check()
     #AM.export_keywords('keywords_output.txt')
-
