@@ -1,0 +1,15 @@
+喜马拉雅山脉_ns 的_u 存在_v 意味着_v 中_j 印_j 间_f 的_u “_w 安全_a 困境_n ”_w 远_a 不_d 是_v 人们_n 想_v 像_v 的_u 那么_r 严重_a 。_w 现有_v 的_u 国际_n 环境_n 和_c 印度_ns 国内_s 的_u 战略_n 思想_n 也_d 使得_v 印度_ns 对_p 中_j 印_j 合作_v 的_u 判断_n 很_d 可能_v 是_v 和_p 解_np 还_d 不_d 如_v 维持_v “_w 非敌非友_id ”_w 的_u 现状_n 。_w 因此_c ,_w 中国_ns 目前_t 不_d 应_v 追求_v 中_j 印_j 间_f 的_u 迅速_a 和解_v ,_w 而是_c 等待_v 和_c 创造_v 长远_a 和解_v 的_u 战略_n 环境_n 。_w 中国_ns 在_p 南亚_ns 的_u 战略_n 不_d 是_v 要_v 遏制_v 印度_ns ,_w 而是_c 要_v 保证_v 印度_ns 在_p 南亚_ns 的_u 领导_v 地位_n 不_d 威胁_v 中国_ns 的_u 利益_n ,_w 即_v 一_m 种_q 类似_v 于_p 当年_t 英国_ns 对_p 欧洲_ns 大陆_n 的_u 战略_n :_w 若远若近_id 的_u 平_j 衡_j 。_w
+制定_v 一个_m 国家_n 对_p 另外_r 一个_m 国家_n 的_u 政策_n 在_p 很_d 大_a 程度_n 上_f 取决_v 于_p 了解_v 对方_n 的_u 政策_n 。_w 我们_r 的_u 印度_ns 政策_n 也_d 不_d 例外_v 。_w
+我们_r 不_d 可能_v 为_p 印度_ns 制定_v 外交_n 政策_n 。_w 因此_c ,_w 印度_ns 要_v 和_c 中国_ns 合_v 作_v 或是_c 不_d 合作_v ,_w 那_r 一定_d 是_v 印度_ns 认为_v 合作_v 或是_c 不_d 合作_v 符合_v 印度_ns 的_u
+1_m
+国家_n 利益_n 。_w 在_p 这_r 一_m 点_q 上_f ,_w 我们_r 认为_v 合作_v 是否_v 符合_v 印度_ns 的_u 国家_n
+利益_n 并_d 不_d 重要_a ,_w 重要_a 的_u 是_v 印度_ns 的_u 判断_n 。_w 我们_r 能_v 做_v 的_u 是_v ,_w 影响_v 印_j 度_j 对_p 合作_v 和_c 不_d 合作_v 的_u 判断_v ,_w 促使_v 印度_ns 选择_v 与_p 中国_ns 合作_v 的_u 政策_n 。_w
+更_d 值得_v 强调_v 的_u 是_v ,_w 在_p 国际_n 关系_n 中_f ,_w 国家_n 并_d 不_d 是_v 只有_c 在_p 不合_v 作_v 时_g 才_d 要_v 付出_v 代价_n 的_u ,_w 合作_v 也_d 同样_d 需要_v 付出_v 代价_n 。_w 尽管_c 合作_v 经_v 常_d 会_v 获利_v ,_w 但_c 并非_v 永远_d 如此_r 。_w
+本文_r 试图_v 运用_v 简单_a 的_u 博弈_v 方法_n ,_w 探讨_v 中国_ns 对_p 印度_ns 的_u 外交_n 政_g 策_g 。_w
+我们_r 先_d 假定_v 一个_m 国家_n 的_u 外交_n 政策_n 只_d 分为_v 两_m 种_q :_w 合作_v (_w coop_x eration_x ,_w C_x )_w 和_c 不_d 合作_v (_w defect_x ,_w D_x )_w 。_w 这样_r ,_w 中_j 印_j 关系_n 就_d 存在_v 四_m 种_q
+状态_n (_w 我们_r 以_p 第一_m 个_q 字母_n 代表_v 印度_ns 的_u 政策_n )_w :_w CC_x (_w 相互_d 合作_v )_w ,_w DC_x (_w 印度_ns 不_d 合作_v ,_w 中国_ns 合作_v ,_w 中国_ns 吃亏_v )_w ,_w CD_x (_w 印度_ns 合作_v ,_w 中国_ns 不合_v
+作_v ,_w 印度_ns 吃亏_a )_w ,_w DD_x (_w 相互_d 不_d 合作_v )_w 。_w
+一般说来_id ,_w 在_p 外交_n 中_f ,_w DC_x 比_p CD_x 要_v 好_a (_w 在_p 博弈论_n 中_f ,_w 对方_n 不_d
+合作_v 而_c 己方_n 仍_d 合作_v 的_u 一_m 方_q 如同_v 被_p “_w 懵_g ”_w 了_u ,_w 所以_c 被_p 称为_v “_w sucker_x ”_w 或_c “_w 傻_a 冒_v ”_w )_w ,_w 即_v D_x C_n >_w C_g D_g 。_w 同_v 样_g ,_w D_x D_n 比_p C_x D_n 好_a (_w 即_v 双_m 方_q 都_d 不_d 合_v 作_v 比_p 自己_r 单独_d 被_p “_w 懵_g ”_w 好_a ,_w 但_c 相互_d 阻吓_v 是_v 例外_v )_w ,_w 但_c 又_d 不如_v 自己_r “_w 懵_g ”_w 人_n 好_a ,_w 因_p 此_r ,_w 有_v D_x C_n >_w D_g D_g >_w C_g D_g 。_w 同_v 理_n ,_w C_x C_n 比_p C_x D_n 好_a (_w C_x C_n >_w C_g D_g )_w 。_w
+上述_a 条件_n 被_p 满足_v 后_f ,_w 共有_v 三_m 种_q 组合_v :_w CC_x >_w DC_x >_w DD_x >_w CD_x ;_w DC_x >_w CC_x >_w DD_x >_w CD_x ;_w DC_x >_w DD_x >_w CC_x >_w CD_x 。_w
+满足_v CC_x >_w DC_x >_w DD_x >_w CD_x 的_u 游戏_n 被_p 称为_v “_w 围猎_v (_w Stag_x hunt_x )_w ”_w (_w 见_v 图_n A_m )_w 。_w 应该_v 说_v ,_w 这_r 是_v 最_d 有_v 希望_n 达成_v 合作_v 的_u 一_m 种_q 游戏_n ,_w 因为_c 合_v 作对_v 双方_n 都_d 是_v 最_d 好_a 的_u 结果_n 。_w 然而_c ,_w 在_p 无政府_n 状态_n 下_f 的_u 国际_n 社会_n 中_f ,_w 国家_n (_w 特别_d 是_v 感觉_v 不_d 安全_a 的_u 国家_n )_w 往往_d 在_p 考虑_v 是否_v 合作_v 时_g ,_w 不仅_c 关心_v 合作_v 的_u “_w 绝对_a 得失_n (_w absolute_x gain_x )_w ”_w ,_w 更_d 关心_v 合作_v 的_u “_w 相_d
