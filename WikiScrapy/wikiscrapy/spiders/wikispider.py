@@ -39,6 +39,11 @@ class WikiSpider(scrapy.Spider):
         item = WikiScrapyItem()
         item['search'] = search
         item['text'] = langconv.Converter('zh-hans').convert(text)
+        with open('data/ans.txt','a') as f:
+            sss = json.dumps({'search':search,
+                'text':langconv.Converter('zh-hans').convert(text)
+                },ensure_ascii=False)
+            f.write(sss+'\n')
         yield item
         '''
         f.write(langconv.Converter('zh-hans').convert(text))
