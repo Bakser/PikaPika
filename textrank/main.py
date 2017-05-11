@@ -1,13 +1,14 @@
 #encoding=utf-8
 import sys
+import re
 import thulac
 class pika:
     types={'n','np','ns','ni','nz','j','a'}
     thu_cut=thulac.thulac()
-    def __init__(self,nm):
-        fin=open(nm,'r')
-        self.text=fin.read()
-        fin.close()
+    def __init__(self,_text):
+        #fin=open(nm,'r')
+        self.text=_text
+        #fin.close()
     def cut_words(self):
         wordslistpre=self.thu_cut.cut(self.text)
         self.wordslist=[x[0] for x in wordslistpre if x[1] in self.types]
@@ -40,7 +41,7 @@ class textrank(pika):
     slides_width=3
     damping=0.85
     iteration_times=300
-    result_numbers=5
+    result_numbers=10
     def __init__(self,nm):
         super().__init__(nm)
     def build_graph(self,cutlist):
@@ -97,10 +98,57 @@ class textrank(pika):
             self.build_graph(self.wordslist)
             self.evaluate(self.wordslist)
     def query(self):
+        nres=[]
         k=self.result_numbers
-        for i in range(0,k):
-            print(self.res[i])
+        for i in range(0,min(k,len(self.res))):
+            nres.append(self.res[i][0])
+        return nres
+class parser:
+    pat_list=[re.compile(r"^([\d一二三四五六七八九十][.:。、．：\s]){1}"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
+    max_line_len=60
+    def __init__(self,nm):
+        fin=open(nm,'r')
+        self.lines=fin.read().split('\n')
+        fin.close()
+    def cut_paragraph(self):
+        max_len=max([len(i) for i in self.lines])
+        print(max_len)
+        for i in self.lines:
+            print(i)
+    def jud_title(self,line):
+        for i in range(0,3):
+            if self.pat_list[2-i].match(line):
+                return 3-i
+        return 0
+    def cut_titles(self):
+        res=[]
+        tmp=""
+        for i in self.lines:
+            title_level=self.jud_title(i)
+            if title_level!=0:
+                if tmp!="":
+                    res.append((0,tmp))
+                    tmp=""
+                res.append((title_level,i))
+            elif len(i)>self.max_line_len:
+                res.append((0,tmp+i))
+                tmp=""
+            else:
+                tmp+=i
+        if tmp!="":
+            res.append((0,tmp))
+        return res
 if __name__=='__main__':
-    t=textrank(sys.argv[1])
-    t.init()
-    t.query()
+    #t=textrank(sys.argv[1])
+    #t.init()
+    #t.query()
+    #t=cutter(sys.argv[1])
+    t=parser("text")
+    l=t.cut_titles();
+    for i in l:
+        if i[0]!=0:
+            print(i[1])
+        else:
+            t=textrank(i[1])
+            t.init()
+            print(t.query())
