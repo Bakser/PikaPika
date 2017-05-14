@@ -191,6 +191,7 @@ class parser:
     def output(self,filename):
         Res=self.build_tree()
         fout=open(filename,"w")
+        fout.write("id,parentid,text,value\n")
         for i in range(0,len(Res)):
             if i==len(Res)-1:
                 fout.write("%s"%Res[i])
