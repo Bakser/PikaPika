@@ -2,6 +2,7 @@
 import sys
 import re
 import thulac
+import json
 class pika:
     types={'n','np','ns','ni','nz','j','a'}
     thu_cut=thulac.thulac()
@@ -44,6 +45,20 @@ class textrank(pika):
     result_numbers=10
     def __init__(self,nm):
         super().__init__(nm)
+    def word_cloud(self,filename):
+        self.cut_words()
+        self.worddict=dict()
+        for i in self.wordslist:
+            if not i in self.worddict:
+                self.worddict[i]=0
+            self.worddict[i]+=1
+        res=[]
+        for i in self.worddict:
+            res.append((i,self.worddict[i]))
+        fout=open(filename,"w")
+        fout.write(json.dumps(res,ensure_ascii=False))
+        fout.close()
+        return
     def build_graph(self,cutlist):
         K=self.slides_width
         self.G=dict()
@@ -119,36 +134,79 @@ class parser:
         for i in range(0,3):
             if self.pat_list[2-i].match(line):
                 return 3-i
-        return 0
+        return 4
     def cut_titles(self):
         res=[]
         tmp=""
         for i in self.lines:
             title_level=self.jud_title(i)
-            if title_level!=0:
+            if title_level!=4:
                 if tmp!="":
-                    res.append((0,tmp))
+                    res.append((4,tmp))
                     tmp=""
                 res.append((title_level,i))
             elif len(i)>self.max_line_len:
-                res.append((0,tmp+i))
+                res.append((4,tmp+i))
                 tmp=""
             else:
                 tmp+=i
         if tmp!="":
-            res.append((0,tmp))
+            res.append((4,tmp))
+        rres=[]
+        for i in res:
+            if i[0]==4:
+                t=textrank(i[1])
+                t.init()
+                rres.append((4,t.query()))
+            else:
+                rres.append((i[0],[i[1]]))
+        self.max_list_len=len(rres)
+        return rres
+    def trans(self,x):
+        res=""
+        for i in range(0,len(x)):
+            res+=x[i]
+            if i!=len(x)-1:
+                res+='/'
         return res
+    def build_tree(self):
+        tmp=self.cut_titles()
+        last=[[] for i in range(0,5)]
+        last[0].append(0)
+        for i in range(0,5):
+            last[i].append(-1)
+        for i in range(0,len(tmp)):
+            for j in range(0,5):
+                if tmp[i][0]==j:
+                    last[j].append(i+1)
+                else:
+                    last[j].append(last[j][i])
+        Res=["0,,"+str(self.lines[0])+",0"]
+        for i in range(0,len(tmp)):
+            mxval=0
+            for j in range(0,tmp[i][0]):
+                mxval=max(last[j][i],mxval)
+            Res.append(str(i+1)+","+str(mxval)+","+self.trans(tmp[i][1])+",0")
+        return Res
+    def output(self,filename):
+        Res=self.build_tree()
+        fout=open(filename,"w")
+        for i in range(0,len(Res)):
+            if i==len(Res)-1:
+                fout.write("%s"%Res[i])
+            else:
+                fout.write("%s\n"%Res[i])
+        fout.close()
 if __name__=='__main__':
     #t=textrank(sys.argv[1])
     #t.init()
     #t.query()
     #t=cutter(sys.argv[1])
-    t=parser("text")
-    l=t.cut_titles();
-    for i in l:
-        if i[0]!=0:
-            print(i[1])
-        else:
-            t=textrank(i[1])
-            t.init()
-            print(t.query())
+    inputfilename="text"
+    text_fin=open(inputfilename,"r")
+    t=textrank(text_fin.read())
+    t.init()
+    t.word_cloud("cloud.json")
+    text_fin.close()
+    parser(inputfilename).output("out.csv")
+    #print(json.dumps(l,ensure_ascii=False))
