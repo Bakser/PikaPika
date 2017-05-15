@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	.container
+		p
+			h1 输入文章
+		form(role='form',method='post')
+			.form-group
+				textarea.form-control(rows='3',name='data')
+			.form-group
+				button.btn.btn-default(type="submit") 提交
+
+
+block append head
+	meta(http-equiv="content-type",content="text/html;charset=utf-8")
+	link(rel='stylesheet', href='/stylesheets/cluster_dendrogram.css')

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	.container
+		h1= title
+		hidden(class='wordlist') #{data}
+		svg(width="#{board.width}", height="#{board.height}")
+			g(transform="translate(#{board.width/2},#{board.height/2})")
+				-for i in data
+					text(text-anchor="middle",transform="translate(#{i.x},#{i.y})rotate(#{i.rotate})",style="font-size:#{i.size}px; font-family:#{i.font};") #{i.text}
