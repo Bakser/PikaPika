@@ -1,0 +1,10 @@
+Stuffs/
+WikiScanner/
+Data/
+163_chinese_news_dataset_2011/
+zhwiki-20161020-pages-meta-current*.xml
+zhwiki-20161020-pages-meta-current*.xml.bz2
+langconv.py
+zh_wiki.py
+Pikapika/163_chinese_news_dataset_2011/163_chinese_news_dataset_2011.dat
+node_modules/
