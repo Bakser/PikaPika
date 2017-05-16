@@ -1,8 +1,10 @@
+#!/usr/bin/python3
 #encoding=utf-8
 import sys
 import re
 import thulac
 import json
+import codecs
 class pika:
     types={'n','np','ns','ni','nz','j','a'}
     thu_cut=thulac.thulac()
@@ -55,7 +57,7 @@ class textrank(pika):
         res=[]
         for i in self.worddict:
             res.append((i,self.worddict[i]))
-        fout=open(filename,"w")
+        fout=codecs.open(filename,"w","utf-8")
         fout.write(json.dumps(res,ensure_ascii=False))
         fout.close()
         return
@@ -122,7 +124,7 @@ class parser:
     pat_list=[re.compile(r"^([\d一二三四五六七八九十][.:。、．：\s]){1}"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
     max_line_len=60
     def __init__(self,nm):
-        fin=open(nm,'r')
+        fin=codecs.open(nm,'r',"utf-8")
         self.lines=fin.read().split('\n')
         fin.close()
     def cut_paragraph(self):
@@ -190,7 +192,7 @@ class parser:
         return Res
     def output(self,filename):
         Res=self.build_tree()
-        fout=open(filename,"w")
+        fout=codecs.open(filename,"w","utf-8")
         fout.write("id,parentid,text,value\n")
         for i in range(0,len(Res)):
             if i==len(Res)-1:
@@ -199,15 +201,26 @@ class parser:
                 fout.write("%s\n"%Res[i])
         fout.close()
 if __name__=='__main__':
+    if len(sys.argv)<2:
+        print("Usage main.py text.in cloud.out tree.out")
     #t=textrank(sys.argv[1])
     #t.init()
     #t.query()
     #t=cutter(sys.argv[1])
-    inputfilename="text"
-    text_fin=open(inputfilename,"r")
-    t=textrank(text_fin.read())
+    print("Begin...");
+    inputfilename = sys.argv[1]
+    cloud_output = sys.argv[2]
+    tree_output = sys.argv[3]
+    print("Input file:",inputfilename)
+    print("Output file:",cloud_output,tree_output)
+    text_fin=codecs.open(inputfilename,"r",encoding="utf-8")
+    text = text_fin.read()
+    #print(text).decode("utf-8")
+    t=textrank(text);
+    print("Init...");
     t.init()
-    t.word_cloud("cloud.json")
+    t.word_cloud(cloud_output)
     text_fin.close()
-    parser(inputfilename).output("out.csv")
+    parser(inputfilename).output(tree_output)
+    print("Finish...");
     #print(json.dumps(l,ensure_ascii=False))

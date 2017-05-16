@@ -10,7 +10,8 @@ var stratify = d3.stratify()
 	.parentId(function(d) { return d.parentid; });
 
 
-d3.csv("flare2.csv", function(error, data) {
+d3.csv('/tree/'+document.getElementById('infopath').innerHTML+'.csv', function(error, data) {
+//d3.csv('/flare.csv', function(error, data) {
 	if (error) throw error;
 
 	var root = stratify(data)

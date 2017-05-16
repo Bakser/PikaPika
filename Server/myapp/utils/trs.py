@@ -1,10 +1,13 @@
 import re
-fin = open('flare.csv','r')
-fout = open('flare2.csv','w')
+import sys
+import codecs
+fin = codecs.open(sys.argv[1],'r','utf-8')
+fout = codecs.open(sys.argv[2],'w','utf-8')
 #print(fin.readline()[:-1])
 fout.write(fin.readline()[:-1]+"\n")
 ccnt = 0
 for w in fin.readlines():
+    print(w)
     res = re.findall(r'^(\d*),(\d*),([^,]*),(\d*)',w)[0]
     lst = res[2].split('/')
     if (len(lst)==1):

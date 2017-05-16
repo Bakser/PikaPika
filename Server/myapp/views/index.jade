@@ -4,6 +4,23 @@ block content
 	.container
 		h1 #{title}
 		p Welcome to #{title}
+		table.table.table-striped
+			thead
+				tr
+					td 标题
+					td 词云
+					td 结构树
+					td 状态 
+			tbody
+				for i in list
+					tr 
+						td 
+							a(href='/text') #{i.title}
+						td 
+							a(href='/cloud?title=#{i.title}') 词云
+						td
+							a(href='/tree?title=#{i.title}') 结构树
+						td #{i.status}
 
 block append head
 	link(rel='stylesheet', href='/stylesheets/cluster_dendrogram.css')
