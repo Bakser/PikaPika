@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 #encoding=utf-8
 import sys
 import re
@@ -33,7 +32,7 @@ class pika:
             self.cut_s.append([x[0] for x in self.thu_cut.cut(i) if x[1] in
                                self.types])
     def prt(self):
-        fout=open('tst','w')
+        fout=codecs.open('tst','w',"utf-8")
         for i in self.sectences:
             fout.write(str([x[0] for x in self.thu_cut.cut(i) if x[1] in
                             self.types]))
@@ -121,11 +120,17 @@ class textrank(pika):
             nres.append(self.res[i][0])
         return nres
 class parser:
-    pat_list=[re.compile(r"^([\d一二三四五六七八九十][.:。、．：\s]){1}"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
+    pat_list=[re.compile(r"^(([\d一二三四五六七八九十][.:。、．：\s]){1}|摘要|总结|Abstract|abstract|Summary|summary)"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
+    pat_abstract=re.compile(r"^(摘要|Abstract|abstract)")
     max_line_len=60
     def __init__(self,nm):
         fin=codecs.open(nm,'r',"utf-8")
         self.lines=fin.read().split('\n')
+        To_Filter=["\r","\n","\t"]
+        for i in To_Filter:
+            for s in self.lines:
+                s=s.replace(i,"")
+        self.lines=[i for i in self.lines if i!=""]
         fin.close()
     def cut_paragraph(self):
         max_len=max([len(i) for i in self.lines])
@@ -141,6 +146,8 @@ class parser:
         res=[]
         tmp=""
         for i in self.lines:
+            #if self.pat_abstract.match(i):
+            #    continue
             title_level=self.jud_title(i)
             if title_level!=4:
                 if tmp!="":
@@ -184,11 +191,13 @@ class parser:
                 else:
                     last[j].append(last[j][i])
         Res=["0,,"+str(self.lines[0])+",0"]
+        #print(''.join([self.lines[0],"0"]))
+        #print("0,,"+self.lines[0]+",0")
         for i in range(0,len(tmp)):
             mxval=0
             for j in range(0,tmp[i][0]):
                 mxval=max(last[j][i],mxval)
-            Res.append(str(i+1)+","+str(mxval)+","+self.trans(tmp[i][1])+",0")
+            Res.append(str(i+1)+","+str(mxval)+","+self.trans(tmp[i][1])+","+str(tmp[i][0]))
         return Res
     def output(self,filename):
         Res=self.build_tree()
@@ -213,10 +222,8 @@ if __name__=='__main__':
     tree_output = sys.argv[3]
     print("Input file:",inputfilename)
     print("Output file:",cloud_output,tree_output)
-    text_fin=codecs.open(inputfilename,"r",encoding="utf-8")
-    text = text_fin.read()
-    #print(text).decode("utf-8")
-    t=textrank(text);
+    text_fin=codecs.open(inputfilename,"r","utf-8")
+    t=textrank(text_fin.read())
     print("Init...");
     t.init()
     t.word_cloud(cloud_output)
