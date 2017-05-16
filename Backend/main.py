@@ -125,7 +125,12 @@ class parser:
     max_line_len=60
     def __init__(self,nm):
         fin=codecs.open(nm,'r',"utf-8")
-        self.lines=[i for i in fin.read().split('\n')if i!="\n"]
+        self.lines=fin.read().split('\n')
+        To_Filter=["\r","\n","\t"]
+        for i in To_Filter:
+            for s in self.lines:
+                s=s.replace(i,"")
+        self.lines=[i for i in self.lines if i!=""]
         fin.close()
     def cut_paragraph(self):
         max_len=max([len(i) for i in self.lines])
@@ -141,8 +146,8 @@ class parser:
         res=[]
         tmp=""
         for i in self.lines:
-            if self.pat_abstract.match(i):
-                continue
+            #if self.pat_abstract.match(i):
+            #    continue
             title_level=self.jud_title(i)
             if title_level!=4:
                 if tmp!="":
@@ -186,6 +191,8 @@ class parser:
                 else:
                     last[j].append(last[j][i])
         Res=["0,,"+str(self.lines[0])+",0"]
+        #print(''.join([self.lines[0],"0"]))
+        #print("0,,"+self.lines[0]+",0")
         for i in range(0,len(tmp)):
             mxval=0
             for j in range(0,tmp[i][0]):
