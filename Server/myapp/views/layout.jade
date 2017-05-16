@@ -1,0 +1,24 @@
+doctype html
+html
+	head
+		block head
+			title #{title}
+			link(rel='stylesheet', href='/stylesheets/style.css')
+			script(src='/javascripts/jquery.min.js')
+			script(src='/javascripts/d3.js')
+			link(rel='stylesheet',href='/stylesheets/bootstrap.min.css')
+			script(src='/javascripts/bootstrap.min.js')
+	body
+		.navbar.navbar-inverse.navbar-fixed-top
+			.container
+				.navbar-header
+					a.navbar-brand.hidden-sm(href='/') Pikapika
+				.navbar-collapse.collapse(role='navigation')
+					ul.nav.navbar-nav
+						li 
+							a(href='/post/text') 提交文件 
+						li
+							a(href='/cloud') 词云
+						li
+							a(href='/tree') 文章结构
+		block content
