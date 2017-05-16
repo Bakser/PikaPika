@@ -119,11 +119,12 @@ class textrank(pika):
             nres.append(self.res[i][0])
         return nres
 class parser:
-    pat_list=[re.compile(r"^([\d一二三四五六七八九十][.:。、．：\s]){1}"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
+    pat_list=[re.compile(r"^(([\d一二三四五六七八九十][.:。、．：\s]){1}|摘要|总结|Abstract|abstract|Summary|summary)"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*"),re.compile(r"^[\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s][\d一二三四五六七八九十][.:。、．：\s]*")]
+    pat_abstract=re.compile(r"^(摘要|Abstract|abstract)")
     max_line_len=60
     def __init__(self,nm):
         fin=open(nm,'r')
-        self.lines=fin.read().split('\n')
+        self.lines=[i for i in fin.read().split('\n')if i!="\n"]
         fin.close()
     def cut_paragraph(self):
         max_len=max([len(i) for i in self.lines])
@@ -139,6 +140,8 @@ class parser:
         res=[]
         tmp=""
         for i in self.lines:
+            if self.pat_abstract.match(i):
+                continue
             title_level=self.jud_title(i)
             if title_level!=4:
                 if tmp!="":
@@ -186,7 +189,7 @@ class parser:
             mxval=0
             for j in range(0,tmp[i][0]):
                 mxval=max(last[j][i],mxval)
-            Res.append(str(i+1)+","+str(mxval)+","+self.trans(tmp[i][1])+",0")
+            Res.append(str(i+1)+","+str(mxval)+","+self.trans(tmp[i][1])+","+str(tmp[i][0]))
         return Res
     def output(self,filename):
         Res=self.build_tree()
@@ -199,15 +202,24 @@ class parser:
                 fout.write("%s\n"%Res[i])
         fout.close()
 if __name__=='__main__':
+    if len(sys.argv)<2:
+        print("Usage main.py text.in cloud.out tree.out")
     #t=textrank(sys.argv[1])
     #t.init()
     #t.query()
     #t=cutter(sys.argv[1])
-    inputfilename="text"
+    print("Begin...");
+    inputfilename = sys.argv[1]
+    cloud_output = sys.argv[2]
+    tree_output = sys.argv[3]
+    print("Input file:",inputfilename)
+    print("Output file:",cloud_output,tree_output)
     text_fin=open(inputfilename,"r")
     t=textrank(text_fin.read())
+    print("Init...");
     t.init()
-    t.word_cloud("cloud.json")
+    t.word_cloud(cloud_output)
     text_fin.close()
-    parser(inputfilename).output("out.csv")
+    parser(inputfilename).output(tree_output)
+    print("Finish...");
     #print(json.dumps(l,ensure_ascii=False))
