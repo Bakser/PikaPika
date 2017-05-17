@@ -10,7 +10,10 @@ router.post('/text', function(req, res, next) {
 		var text = req.body.text;
 		var title = req.body.title;
 		var fs = require('fs');
+		var exec = require('child_process').exec;
+		var execSync = require('child_process').execSync;
 		fs.writeFileSync("./data/text/"+title,text);
+		execSync("dos2unix ./data/text/"+title);
 		var list = JSON.parse(fs.readFileSync("./data/list.json",'utf-8'));
 		var flag = false;
 		console.log(JSON.stringify(list));
@@ -24,7 +27,6 @@ router.post('/text', function(req, res, next) {
 				list = list.concat([{"title":title,"status":"Computing..."}]);
 		console.log(JSON.stringify(list));
 		fs.writeFileSync("./data/list.json",JSON.stringify(list));
-		var exec = require('child_process').exec;
 		console.log('./utils/Textrank/main.py ./data/text/'+title+' ./data/cloud/'+title+'.json ./data/tree/'+title+'.csv');
 		cmd = exec('python3 ./utils/Textrank/main.py ./data/text/'+title+' ./data/cloud/'+title+'.json ./data/tree/'+title+'_t.csv');
 		//cmd = exec('./utils/Textrank/main.py',['./data/text/'+title,'./data/cloud/'+title+'.json','./data/tree/'+title+'.csv']);
@@ -41,7 +43,6 @@ router.post('/text', function(req, res, next) {
 						if (list[i].title == title)
 								list[i]['status'] = "Finish...";
 				fs.writeFileSync("./data/list.json",JSON.stringify(list));
-				var execSync = require('child_process').execSync;
 				execSync('python3 ./utils/trs.py ./data/tree/'+title+'_t.csv ./data/tree/'+title+'.csv');
 		});
 		res.redirect('/');

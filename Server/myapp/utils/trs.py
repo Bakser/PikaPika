@@ -7,11 +7,10 @@ fout = codecs.open(sys.argv[2],'w','utf-8')
 fout.write(fin.readline()[:-1]+"\n")
 ccnt = 0
 for w in fin.readlines():
-    print(w)
     res = re.findall(r'^(\d*),(\d*),([^,]*),(\d*)',w)[0]
     lst = res[2].split('/')
     if (len(lst)==1):
-        print(",".join([res[0],res[1],res[2],res[3]]))
+        #print(",".join([res[0],res[1],res[2],res[3]]))
         fout.write(",".join([res[0],res[1],res[2],res[3]])+"\n")
     else:
         ccnt += 1

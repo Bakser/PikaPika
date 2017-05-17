@@ -1,0 +1,620 @@
+跳转到主要内容
+w3cplus
+CSS3MobileSassJavaScript视频教程译文SVG工具标签云
+
+
+你在这里
+首页 » 博客 » Sean的博客
+Jade的使用
+
+作者：南北 日期：2015-05-11 点击：12297
+jade
+
+编辑推荐： 掘金是一个高质量的技术社区，从 CSS 到 Vue.js，性能优化到开源类库，让你不错过前端开发的每一个技术干货。 点击链接查看最新前端内容，或到各大应用市场搜索「 掘金」下载APP，技术干货尽在掌握中。
+如果你熟悉 Sublime Text 和 Emmet 的组合，那么 Jade 也会是你的菜。模板引擎这个术语听起来太过于高大上了，私下里我更喜欢称它们是 HTML 预处理语言，非常类似 Sass 之于 CSS —— 不过相比起 Sass 操纵 CSS 的强大力量，Jade 对 HTML 的影响只能说本本分分，没有什么激进之处，当然，这并不是坏事。
+
+Jade 中省略了大量的尖括号，给我的感觉就是简洁和高效。这里不会讨论各种模板引擎的优劣，技术和工具的好坏向来都是不死不休的伪命题，还是花更多的时间来创造有价值的东西更有意思。
+
+本文主要参考了 Jade 官方的英文文档，并根据自己的经验缩减了部分内容——求全求精不是本文的目的，希望本文能够让你快速入门。即使做了部分精简，掌握之后也可以应对百分之九十以上的需求。此外，官方文档的各个小节是按字典序排列的，这并不适合第一次接触 Jade 的开发者，所以你懂得，我又给它改了……
+
+古语有云：工欲善其事，必先利其器。利用 npm 安装 Jade 的过程这里就不介绍了，一方面是因为 mac 下安装太简单；另一方面是因为 windows 下给了我太多阴影……所以，这里直接附上在线测试页面，即开即用。
+
+Doctype
+
+那年，某位学长来介绍 HTML 入门，上来第一个操作就是复制了这么一串，复制了这么一串……
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+幸好现在是 HTML5 流行的新时代，文档类型精简掉了那个冗长拖沓的尾巴，即使手工编写也不费劲：
+
+<!DOCTYPE html>
+Jade 对此做的更彻底：不用尖括号，不用大小写……
+
+doctype html
+其他常用类型还有：
+
+doctype xml
+doctype transitional
+doctype strict
+自定义文档类型以及其他类型，可以参考这里。
+
+标签
+
+标签是 HTML 的核心元素，所以我们就从这里入手。不知道大家有没有接触过 python，如果接触过，那下面就很好理解了；如果没接触过，那么就需要培养一种意识——缩进意识。Jade 和 python 都是对缩进敏感的语法形式。在其他语言中，缩进可能是一种表面功夫，是用来提高可读性的，但在 jade 和 pyhton 中还兼具划分层次结构的作用。这种强制缩进的好处是提高了可读性，省略了一些界定符号（大括号、尖括号……）。
+
+在 Jade 中创建一个列表：
+
+ul
+  li Item A
+  li Item B
+  li Item C
+生成的 HTML：
+
+<ul>
+  <li>Item A</li>
+  <li>Item B</li>
+  <li>Item C</li>
+</ul>
+就是这么简单，再也不用顾虑标签闭合了吗、shift 键在哪啊，全程无压力高速输出！唯一需要记住的就是用统一的缩进来嵌套标签。
+
+虽然 jade 还提供了另一种嵌套形式，但这里并不推荐。此外，jade 还有关于自闭和标签（img 等）的介绍，这里也不作介绍。之所以精简掉它们，主要是避免用法混乱导致的错误。建议使用上述创建列表的方法创建其他标签。有关标签的更多信息，请参考这里。
+
+提示：如果环境已经正确安装，那么大多数情况下的错误都是缩进惹的祸，一定一定要保持一致的缩进格式，建议统一将 tab 键输出为空格，并采用 4 个空格作为标准缩进。
+注释
+
+Jade 支持两种注释：单行注释和多行注释。每种注释支持两种模式：输出到源文件和不输出到源文件。
+
+在 Jade 中创建一个单行输出注释和单行不输出注释：
+
+// 这个单行注释会输出到编译后的文件中
+p 单行输出注释
+//- 这个单行注释不会输出到编译后的文件中
+p 单行不输出注释
+生成的 HTML：
+
+<!-- 这个单行注释会输出到编译后的文件中-->
+<p>单行输出注释</p>
+<p>单行不输出注释</p>
+由上可见，输出和不输出的差别就在于多了一个 -，谨记！
+
+相比起单行注释，多行注释的内容要在注释符号的下一行，以相同的缩进来编写。多行注释的输出和不输出模式和单行注释相同，需要使用 - 标记：
+
+// 
+    这个多行注释会输出到编译后的文件中
+    这个多行注释会输出到编译后的文件中
+p 多行输出注释
+//- 
+    这个多行注释不会输出到编译后的文件中
+    这个多行注释不会输出到编译后的文件中
+p 多行不输出注释
+生成的 HTML：
+
+<!-- 
+这个多行注释会输出到编译后的文件中
+这个多行注释会输出到编译后的文件中
+-->
+<p>多行输出注释</p>
+<p>多行不输出注释</p>
+有关注释的更多信息，可以参考这里。
+
+属性
+
+在 Jade 中填写属性，基本上和 HTML 保持了一致：
+
+input(type='checkbox', checked)
+input(
+  type='checkbox'
+  name='agreement'
+  checked
+)
+生成的 HTML：
+
+<input type="checkbox" checked>
+<input type="checkbox" name="agreement" checked>
+但是，你见过可以根据条件设置属性的语法形式吗？这里就有：
+
+- var authenticated = true
+body(class=authenticated ? 'authed' : 'anon')
+- var currentUrl = '/about'
+a(class={active: currentUrl === '/'} href='/') Home
+a(class={active: currentUrl === '/about'} href='/about') About
+生成的 HTML：
+
+<body class="authed"></body>
+<a href="/">Home</a><a href="/about" class="active">
+对于频繁使用到的类名和 ID 名，Jade 提供了两种字面量：类名字面量和 ID 字面量——非常类似 Emmet 的用法。如果不在字面量前边指定标签名，则默认使用 div:
+
+.link
+a.link
+#button
+a#button
+生成的 HTML：
+
+<div class="link"></div>
+<a class="link"></a>
+<div id="button"></div>
+<a id="button"></a>
+另一个常常会被 JavaScript 修改的属性就是 style。为了更方便地修改该属性，Jade 接收一个类似 JavaScript 对象类型的参数：
+
+a(style={color: 'red', background: 'green'})
+生成的 HTML：
+
+<a style="color:red;background:green"></a>
+为了更方便地添加其他自定义属性，jade 特意增加了一个语法格式 &attributes：
+
+- var attributes = {'data-foo': 'bar'};
+div#foo(data-bar="foo")&attributes(attributes)
+生成的 HTML：
+
+<div id="foo" data-bar="foo" data-foo="bar"></div>
+文本
+
+Jade 支持三种文本输出方式：单行文本、管道文本和多行文本：
+
+// 单行文本内容直接跟在标签名后面
+p 这里是单行文本内容
+// 管道文本使用管道符
+p 
+    | 这是一行管道文本，行数无限制
+    | 这是一行管道文本，行数无限制
+    | 这是一行管道文本，行数无限制
+    | ……
+// 多行文本需要在标签名后添加点号
+p.
+    这是多行文本，注意缩进
+    这是多行文本，注意缩进
+    这是多行文本，注意缩进
+生成的 HTML：
+
+<!-- 单行文本内容直接跟在标签名后面-->
+<p>这里是单行文本内容</p>
+<!-- 管道文本使用管道符-->
+<p>
+  这是一行管道文本，行数无限制
+  这是一行管道文本，行数无限制
+  这是一行管道文本，行数无限制
+  ……
+</p>
+<!-- 多行文本需要在标签名后添加点号-->
+<p>
+  这是多行文本，注意缩进
+  这是多行文本，注意缩进
+  这是多行文本，注意缩进
+</p>
+代码嵌入
+
+将 JavaScript 嵌入到 Jade 中，一共有三种方法。第一种方式是使用 -，代码中的特殊字符不会被转义：
+
+- for (var x = 0; x < 3; x++)
+  li <a></a>
+生成的 HTML：
+
+<li><a></a></li>
+<li><a></a></li>
+<li><a></a></li>
+第二种方法是使用 =，代码中的特殊字符将会被转义：
+
+p
+  = 'This code is <escaped>!'
+生成的 HTML：
+
+<p>This code is &lt;escaped&gt;!</p>
+第三种方法是使用 !=，代码中的特殊字符不会被转义：
+
+p
+  = 'This code is <escaped>!'
+生成的 HTML：
+
+<p>This code is <escaped>!</p>
+插值语法
+
+这是我第二次听说插值的概念，但其实很好理解：使用插值语法，预先指定一个位置，方便以后插入一个新值，简称插值。这段话是我大半夜随性而发，意思到了即可，官方文档里可没有。
+
+Jade 提供了字符串插值和标签插值。其中，字符串插值由于要考虑到安全性问题，所以又分成了转义和不转义两种情况：
+
+// 转义字符串插值 `#{}`
+- var theGreat = "<span>escape!</span>";
+p This will be safe: #{theGreat}
+// 不转义字符串插值 `!{}`
+- var theGreat = "<span>escape!</span>";
+p This will be safe: !{theGreat}
+// 标签插值
+p #[a(href="jade-lang.com") Jade]
+生成的 HTML：
+
+<!-- 转义字符串插值 `#{}`-->
+<p>This will be safe: &lt;span&gt;escape!&lt;/span&gt;</p>
+<!-- 不转义字符串插值 `!{}`-->
+<p>This will be safe: <span>escape!</span></p>
+<!-- 标签插值-->
+<p><a href="jade-lang.com">Jade</a></p>
+条件语句
+
+说起条件语句，就必须谈到 if ... else if ... else 这个经典的条件判断，它也是 Jade 最基本的条件语句：
+
+- var user = { description: 'foo bar baz' }
+- var authorised = false
+#user
+  if user.description
+    h2 Description
+    p.description= user.description
+  else if authorised
+    h2 Description
+    p.description.
+      User has no description,
+      why not add one...
+  else
+    h1 Description
+    p.description User has no description
+生成的 HTML：
+
+<div id="user">
+  <h2>Description</h2>
+  <p class="description">foo bar baz</p>
+</div>
+此外，Jade 还提供了一个 unless 条件语句。如果说 if 可以通过判断给定条件是否符合要求来执行下一步，那么 unless 完全是相反的一件事，它会判断给定条件是否不符合要求，如果不符合，就执行下一步。
+
+- var con = false
+unless con
+  p Hello, World
+生成的 HTML：
+
+<p>Hello, World</p>
+上面的逻辑结构看起来比生成的 HTML 繁琐多了，但这并不影响它是一种高效的解决方案，尤其是当你复用这段代码的时候。
+
+分支语句
+
+当需要 if 判断的条件过多时，其他语言会提供类似 switch 的分支判断语句。在 Jade 中，也提供了类似的语法——case：
+
+- var friends = 10
+case friends
+  when 0
+    p you have no friends
+  when 1
+    p you have a friend
+  default
+    p you have #{friends} friends
+生成的 HTML：
+
+<p>you have 10 friends</p>
+在 Jade 中并没有提供类似 break 的语法，对于所有的条件默认只有一种输出结果，如果没有符合条件的就输出 defualt 中的内容。但是，有一个特例：
+
+- var friends = 0
+case friends
+  when 0
+  when 1
+  default
+    p you have #{friends} friends
+生成的 HTML：
+
+<p>you have very 0 friends</p>
+从上面的示例可以看出，当没有可输出内容时，就会执行向下查找可执行语句，一直查找到 default。
+
+遍历语句
+
+Jade 使用 each 对数组和对象遍历，用法与 JavaScript 大同小异。
+
+// 遍历数组
+ul
+  each val, index in ['zero', 'one', 'two']
+    li= index + ': ' + val
+
+// 遍历对象
+ul
+  each val, index in {1:'one',2:'two',3:'three'}
+    li= index + ': ' + val
+生成的 HTML：
+
+<!-- 遍历数组-->
+<ul>
+  <li>0: zero</li>
+  <li>1: one</li>
+  <li>2: two</li>
+</ul>
+<!-- 遍历对象-->
+<ul>
+  <li>1: one</li>
+  <li>2: two</li>
+  <li>3: three</li>
+</ul>
+循环语句
+
+Jade 使用 while 实现循环，用法还是中规中矩的与 JavaScript 相似：
+
+- var n = 0
+ul
+  while n < 4
+    li= n++
+生成的 HTML：
+
+<ul>
+  <li>0</li>
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+mixins
+
+在 Scss 和 Jade 中，混合宏（mixins）都是举足轻重的语法。混合宏具有复用、解耦、可读、可扩。可维护等等优势。创建混合宏需要使用 mixin 标识符，创建混合宏实例时，需要使用 + 标识符：
+
+//- Declaration
+mixin list
+  ul
+    li foo
+    li bar
+    li baz
+//- Use
++list
++list
+生成的 HTML：
+
+<ul>
+  <li>foo</li>
+  <li>bar</li>
+  <li>baz</li>
+</ul>
+<ul>
+  <li>foo</li>
+  <li>bar</li>
+  <li>baz</li>
+</ul>
+上面是最基本的混合宏，此时它还不具有诸多优势，除非我们给它传递参数，才能让它具有非凡活力：
+
+mixin pet(name)
+  li.pet= name
+ul
+  +pet('cat')
+  +pet('dog')
+  +pet('pig')
+生成的 HTML：
+
+<ul>
+  <li class="pet">cat</li>
+  <li class="pet">dog</li>
+  <li class="pet">pig</li>
+</ul>
+此外，还可以使用 ... 标识符表示不定数量的参数：
+
+mixin list(id, ...items)
+  ul(id=id)
+    each item in items
+      li= item
+
++list('my-list', 1, 2, 3, 4)
+生成的 HTML：
+
+<ul id="my-list">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+</ul>
+有时候，我们需要替换混合宏的某个部分，那么就可以使用 block 标识符来占位：
+
+mixin article(title)
+  .article
+    .article-wrapper
+      h1= title
+      if block
+        block
+      else
+        p No content provided
+
++article('Hello world')
+
++article('Hello world')
+  p This is my
+  p Amazing article
+生成的 HTML：
+
+<div class="article">
+  <div class="article-wrapper">
+    <h1>Hello world</h1>
+    <p>No content provided</p>
+  </div>
+</div>
+<div class="article">
+  <div class="article-wrapper">
+    <h1>Hello world</h1>
+    <p>This is my</p>
+    <p>Amazing article</p>
+  </div>
+</div>
+这种可替代语法，进一步提高了 Jade 的灵活性。
+
+最后，我们谈谈有关属性的混合宏，官方文档中列举了两种用法，这里只介绍一种：
+
+mixin link(href, name)
+  a(href=href)&attributes(attributes)= name
+
++link('/foo', 'foo')(class="btn")
+生成的 HTML：
+
+<a href="/foo" class="btn">foo</a>
+上面混合宏中并没有声明 attributes，是因为 Jade 已经隐式为其引用了所有传递给 &attributes 的参数。
+
+includes
+
+实现高度复用的另一种方式就是将代码片段保存到不同文件中，然后在需要的地方导入这些片段，为此，Jade 提供了 include 指令，下面是一个 index 页面：
+
+//- index.jade
+doctype html
+html
+  include ./includes/head.jade
+  body
+    h1 My Site
+    p Welcome to my super lame site.
+    include ./includes/foot.jade
+head 代码片段：
+
+//- includes/head.jade
+head
+  title My Site
+  script(src='/javascripts/jquery.js')
+  script(src='/javascripts/app.js')
+footer 代码片段：
+
+//- includes/foot.jade
+#footer
+  p Copyright (c) foobar
+生成的 HTML：
+
+<!doctype html>
+<html>
+  <head>
+    <title>My Site</title>
+    <script src='/javascripts/jquery.js'></script>
+    <script src='/javascripts/app.js'></script>
+  </head>
+  <body>
+    <h1>My Site</h1>
+    <p>Welcome to my super lame site.</p>
+    <div id="footer">
+      <p>Copyright (c) foobar</p>
+    </div>
+  </body>
+</html>
+继承
+
+Jade 中使用 extends 来继承代码片段，与 include 本本分分地引用代码段不同，继承可以修改代码片段。
+
+首先，在 layout 页面使用 block 标识符，设置一个可修改的代码片段，紧跟 block 标识符之后的是该代码片段的名字：
+
+//- layout.jade
+doctype html
+html
+  head
+    block title
+      title Default title
+  body
+    block content
+然后，在 index 页面继承 layout，并可以根据代码片段的名字修改相关代码：
+
+//- index.jade
+extends ./layout.jade
+
+block title
+  title Article Title
+
+block content
+  h1 My Article
+生成的 HTML：
+
+<!doctype html>
+<html>
+  <head>
+    <title>Article Title</title>
+  </head>
+  <body>
+    <h1>My Article</h1>
+  </body>
+</html>
+上述这种继承方式，会抹除原来代码片段的部分，如果想要追加代码片段，可以使用 append 和 prepend 指令。append 用于在原有代码片段之后追加，prepend 用于在原有代码片段之前追加。一个初始页面：
+
+//- layout.jade
+html
+  head
+    title Layout
+  body
+    block content
+      p Hello
+使用 append ：
+
+extend layout
+
+block append content
+    p World
+生成的 HTML：
+
+<html>
+  <head>
+    <script src="/vendor/jquery.js"></script>
+    <script src="/vendor/caustic.js"></script>
+  </head>
+  <body>
+    <p>Hello</p>
+    <p>World</p>
+  </body>
+</html>
+使用 prepend：
+
+extend layout
+
+block prepend content
+    p World
+生成的 HTML：
+
+<html>
+  <head>
+    <script src="/vendor/jquery.js"></script>
+    <script src="/vendor/caustic.js"></script>
+  </head>
+  <body>
+    <p>World</p>
+    <p>Hello</p>
+  </body>
+</html>
+总结
+
+如果你还没有接触过模板引擎，那么就来试试 Jade 吧，它一定会有让你愉悦的一面。一直有一个梦想：三分钟敲完代码，简洁优美，剩下的人生尽情地去玩……
+
+
+南北
+在校学生，本科计算机专业。狂热地想当一名作家，为色彩和图形营造的视觉张力折服，喜欢调教各类JS库，钟爱CSS，希望未来加入一个社交性质的公司，内心极度肯定“情感”在社交中的决定性地位，立志于此改变社交关系的快速迭代。个人博客。
+如需转载，烦请注明出处：http://www.w3cplus.com/html/jade.html
+
+上一篇: 一个完整的Flexbox指南 | 下一篇: 关于CSS的will-change属性的介绍
+在线视频教程
+Search this site 
+
+
+
+合作网站
+
+JavaScript学习案例
+墨鱼前端培训
+HTML5梦工场
+Sass入门指南
+CSS解决方案
+W3ctech
+前端圈
+Drupal中国
+友情链接
+
+腾讯 AlloyTeam
+广州微信开发
+在线图片压缩
+java源代码学习
+墨鱼前端开发培训
+猪八戒网
+HTML5梦工场
+PHP教程
+程序员客栈
+imweb 前端社区
+关于我们
+
+W3cplus
+W3cplus是一个致力于推广国内前端行业的技术博客。它以探索为己任，不断活跃在行业技术最前沿，努力提供高质量前端技术博文；其文章范围广泛，主要以CSS3、HTML5、Sass、Mobile和各类DEMO为主。
+
+W3cplus具有一支强大的团队，提供长期的前端项目外包，Drupal建站，Drupal主题制作服务，以及提供企业广告展示与招聘发布，有需要的请联系：QQ:81059347，E-mail:w3cplus@hotmail.com
+
+关于站长
+
+大漠
+
+常用昵称“大漠”，W3CPlus创始人，目前就职于淘宝。中国Drupal社区核心成员之一。对HTML5、CSS3和Sass等前端脚本语言有非常深入的认识和丰富的实践经验，尤其专注对CSS3、Sass和Mobile的研究，是国内最早研究和使用CSS3和Sass技术的一批人。CSS3、Sass和Drupal中国布道者。2014年出版《图解CSS3：核心技术与案例实战》。
+
+github weibo facebook google twitter linkedin
+ 
+
+我的作品
+
+图解CSS3
+本书是国内著名的Web前端专家历时2载的心血之作，根据最新的CSS3撰写，融入了作者在CSS领域多年的使用经验，旨在将本书打造成为CSS3领域最权威和实用的专业著作，供没有经验的读者系统学习，供有经验的读者参考备查。
+
+本书理论知识系统全面，详细讲解了选择器、伸缩布局盒模型、渐变、过渡、动画等主题下涵盖的所有CSS3新特性。
+
+湘ICP备13003850号-12，版权所有 衡阳瑞思信息技术有限公司 © 2011-2017 W3CPLUS，感谢Drupal开源技术。感谢七牛云存储提供静态资源空间。
+返回顶部
+著作权归作者所有。
+商业转载请联系作者获得授权,非商业转载请注明出处。
+原文: http://www.w3cplus.com/html/how-to-use-jade.html © w3cplus.com

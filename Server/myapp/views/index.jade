@@ -3,7 +3,6 @@ extends layout
 block content
 	.container
 		h1 #{title}
-		p Welcome to #{title}
 		table.table.table-striped
 			thead
 				tr
@@ -15,11 +14,17 @@ block content
 				for i in list
 					tr 
 						td 
-							a(href='/text') #{i.title}
+							a(href='/text?title=#{i.title}') #{i.title}
 						td 
-							a(href='/cloud?title=#{i.title}') 词云
+							-if (i.status == 'Computing...')
+									p 词云
+							-else
+									a(href='/cloud?title=#{i.title}') 词云
 						td
-							a(href='/tree?title=#{i.title}') 结构树
+							-if (i.status == 'Computing...')
+									p 结构树
+							-else
+									a(href='/tree?title=#{i.title}') 结构树
 						td #{i.status}
 
 block append head

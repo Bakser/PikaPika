@@ -6,8 +6,7 @@ router.get('/', function(req, res, next) {
 		title = req.query.title;
 		if (title == undefined)
 		{
-				var err = new Error('No file title...');
-				next(err);
+				res.render('plain',{'title':'Word Cloud','content':require('fs').readFileSync('./public/cloud.txt')});
 				return ;
 		}
 		var fs = require('fs');

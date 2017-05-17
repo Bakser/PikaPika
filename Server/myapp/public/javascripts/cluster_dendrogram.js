@@ -1,23 +1,22 @@
 var svg = d3.select("svg"),
 	width = +svg.attr("width"),
 	height = +svg.attr("height"),
-	g = svg.append("g").attr("transform", "translate(200,0)");
+	g = svg.append("g").attr("transform", "translate(300,0)");
 
-var tree = d3.cluster()
-	.size([height, width - 360]);
 
 var stratify = d3.stratify()
 	.parentId(function(d) { return d.parentid; });
 
 
-d3.csv('/tree/'+document.getElementById('infopath').innerHTML+'.csv', function(error, data) {
-//d3.csv('/flare.csv', function(error, data) {
+d3.csv('/tree/'+document.getElementById('infopath').innerHTML+'_t.csv', function(error, data) {
 	if (error) throw error;
 
-	var root = stratify(data)
-		.sort(function(a, b) { return (a.height - b.height) || a.id.localeCompare(b.id); });
+	var mxdepth = 0;
 
-	tree(root);
+	root = stratify(data)
+		.sort(function(a, b) {return a.id < b.id; });
+
+	d3.cluster().size([height,root.height*200])(root);
 
 	var link = g.selectAll(".link")
 		.data(root.descendants().slice(1))
@@ -40,12 +39,15 @@ d3.csv('/tree/'+document.getElementById('infopath').innerHTML+'.csv', function(e
 		.data(root.descendants())
 		.enter().append("g")
 		.attr("class", function(d) { return "node" + (d.children ? " node--internal" : " node--leaf"); })
-		.attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+		.attr("transform", function(d) { return d.children?
+				"translate(" + d.y + "," + d.x + ")" :
+				"translate(" + d.y + "," + d.x + ")"; });
 
 	node.append("circle")
 		.attr("r", 2.5);
 
 	node.append("text")
+		.style('font-size',13)
 		.attr("dy", 3)
 		.attr("x", function(d) { return d.children ? -8 : 8; })
 		.style("text-anchor", function(d) { return d.children ? "end" : "start"; })
