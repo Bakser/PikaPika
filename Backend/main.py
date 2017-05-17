@@ -146,8 +146,8 @@ class parser:
         res=[]
         tmp=""
         for i in self.lines:
-            #if self.pat_abstract.match(i):
-            #    continue
+            if self.pat_abstract.match(i):
+                continue
             title_level=self.jud_title(i)
             if title_level!=4:
                 if tmp!="":
