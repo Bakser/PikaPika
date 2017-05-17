@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 				console.log(data);
 				data = JSON.parse(data);
-				res.render('cloud',{"title":'Pikapika',"data":JSON.stringify(data),"board":{'height':960,'width':500}});
+				res.render('cloud',{"title":title,"data":JSON.stringify(data),"board":{'height':960,'width':500}});
 				}
 		});
 });
