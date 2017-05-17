@@ -7,14 +7,13 @@ var svg = d3.select("svg"),
 var stratify = d3.stratify()
 	.parentId(function(d) { return d.parentid; });
 
-
 d3.csv('/tree/'+document.getElementById('infopath').innerHTML+'_t.csv', function(error, data) {
 	if (error) throw error;
 
 	var mxdepth = 0;
 
-	root = stratify(data)
-		.sort(function(a, b) {return a.id < b.id; });
+	root = stratify(data).sort(function(a, b) {return a.id - b.id; });
+
 
 	d3.cluster().size([height,root.height*200])(root);
 

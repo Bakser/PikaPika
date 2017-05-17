@@ -13,9 +13,12 @@ router.get('/', function(req, res, next) {
 		fs.readFile("./data/cloud/"+title+".json","utf-8",function(err,data){
 				if (err)
 						console.log(err);
+				else{
+
 				console.log(data);
 				data = JSON.parse(data);
 				res.render('cloud',{"title":'Pikapika',"data":JSON.stringify(data),"board":{'height':960,'width':500}});
+				}
 		});
 });
 
