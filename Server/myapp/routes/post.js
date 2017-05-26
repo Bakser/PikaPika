@@ -13,7 +13,7 @@ router.post('/text', function(req, res, next) {
 		var exec = require('child_process').exec;
 		var execSync = require('child_process').execSync;
 		fs.writeFileSync("./data/text/"+title+'.txt',text);
-		execSync("dos2unix ./data/text/"+title+'.txt');
+		execSync("dos2unix './data/text/"+title+".txt'");
 		var list = JSON.parse(fs.readFileSync("./data/list.json",'utf-8'));
 		var flag = false;
 		console.log(JSON.stringify(list));
@@ -27,8 +27,8 @@ router.post('/text', function(req, res, next) {
 				list = list.concat([{"title":title,"status":"Computing..."}]);
 		console.log(JSON.stringify(list));
 		fs.writeFileSync("./data/list.json",JSON.stringify(list));
-		console.log('./utils/Textrank/main.py ./data/text/'+title+'.txt ./data/cloud/'+title+'.json ./data/tree/'+title+'.csv');
-		cmd = exec('python3 ./utils/Textrank/main.py ./data/text/'+title+'.txt ./data/cloud/'+title+'.json ./data/tree/'+title+'_t.csv');
+		console.log('./utils/Textrank/main.py "./data/text/'+title+'.txt" "./data/cloud/'+title+'.json" "./data/tree/'+title+'.csv"');
+		cmd = exec('python3 ./utils/Textrank/main.py "./data/text/'+title+'.txt" "./data/cloud/'+title+'.json" "./data/tree/'+title+'_t.csv"');
 		//cmd = exec('./utils/Textrank/main.py',['./data/text/'+title,'./data/cloud/'+title+'.json','./data/tree/'+title+'.csv']);
 		cmd.stdout.on('data',function(data){
 				console.log(data);
@@ -43,7 +43,7 @@ router.post('/text', function(req, res, next) {
 						if (list[i].title == title)
 								list[i]['status'] = "Finish...";
 				fs.writeFileSync("./data/list.json",JSON.stringify(list));
-				execSync('python3 ./utils/trs.py ./data/tree/'+title+'_t.csv ./data/tree/'+title+'.csv');
+				execSync('python3 ./utils/trs.py "./data/tree/'+title+'_t.csv" "./data/tree/'+title+'.csv"');
 		});
 		res.redirect('/');
 });

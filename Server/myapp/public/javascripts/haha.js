@@ -6,11 +6,11 @@ var d3 = require("d3"),
 var fill = d3.scaleOrdinal(d3.schemeCategory20);
 
 var layout = cloud()
-	.size([500, 500])
+	.size([700, 700])
 	.words(
 		JSON.parse(document.getElementById('wordlist').innerHTML)
 		.map(function(d) {
-			return {text: d[0], size: 10 + d[1], test: "haha"};
+			return {text: d[0], size: 10 + Math.pow(d[1],.9), test: "haha"};
 		}))
 	.padding(1)
 	.rotate(function() { return ~~((Math.random()-.5) * 7) * 20; })

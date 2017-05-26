@@ -16,7 +16,9 @@ router.get('/', function(req, res, next) {
 				else{
 
 				console.log(data);
-				data = JSON.parse(data);
+				data = JSON.parse(data)
+						.sort(function(a,b){return b[1]-a[1];}) 
+						.slice(0,250);
 				res.render('cloud',{"title":title,"data":JSON.stringify(data),"board":{'height':960,'width':500}});
 				}
 		});

@@ -121,6 +121,8 @@ module.exports = function() {
 
       if (tag.x + tag.x0 < 0 || tag.y + tag.y0 < 0 ||
           tag.x + tag.x1 > size[0] || tag.y + tag.y1 > size[1]) continue;
+	  //if ((tag.x+tag.x0 - size[0]/2) * (tag.x+tag.x0 - size[0]/2) + (tag.y+tag.y0-size[1]/2) * (tag.y+tag.y0-size[1]/2) > (size[0]*size[0] + size[1]*size[1])/4)
+	//		  continue;
       // TODO only check for collisions within current bounds.
       if (!bounds || !cloudCollide(tag, board, size[0])) {
         if (!bounds || collideRects(tag, bounds)) {
