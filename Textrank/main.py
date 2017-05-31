@@ -4,8 +4,9 @@ import re
 import thulac
 import json
 import codecs
+from Searcher.searcher import *
 class pika:
-    types={'n','np','ns','ni','nz','j','a'}
+    types={'n','np','ns','ni','nz','j'}#'a'
     thu_cut=thulac.thulac()
     def __init__(self,_text):
         #fin=open(nm,'r')
@@ -44,6 +45,7 @@ class textrank(pika):
     damping=0.85
     iteration_times=300
     result_numbers=10
+    wikiFactor=2
     def __init__(self,nm):
         super().__init__(nm)
     def word_cloud(self,filename):
@@ -63,6 +65,23 @@ class textrank(pika):
     def build_graph(self,cutlist):
         K=self.slides_width
         self.G=dict()
+        self.wiki=dict()
+        wikiDealer=Dealer(cutlist)
+        mat=wikiDealer.calculate()
+        for i in range(0,len(cutlist)):
+            p=cutlist[i]
+            if mat[i][0]==-1:
+                self.wiki[p]=1.0
+                continue
+            if not p in self.G:
+                self.G[p]=dict()
+            self.wiki[p]=self.wikiFactor
+            tsum=0
+            for j in mat[i]:
+                tsum+=j
+            for j in range(0,len(cutlist)):
+                if not cutlist[j] in self.G[p]:
+                    self.G[p][cutlist[j]]=float(mat[i][j])/float(tsum)*self.wikiFactor
         for s in cutlist:
             for i in range(0,len(s)):
                 p=s[i]
@@ -70,9 +89,11 @@ class textrank(pika):
                     self.G[p]=dict()
                 for j in range(max(i-K,0),min(i+K,len(s)-1)):
                     if not s[j] in self.G[p]:
-                        self.G[p][s[j]]=1.0
+                        self.G[p][s[j]]=1.0*self.wiki[s[j]]
                     else:
-                        self.G[p][s[j]]+=1.0
+                        self.G[p][s[j]]+=1.0*self.wiki[s[j]]
+       
+            
     def print_graph(self):
         for i in self.G:
             print(i,':',self.G[i].items())
