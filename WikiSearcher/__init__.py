@@ -1,1 +1,1 @@
-from searcher import *
+from .searcher import *
