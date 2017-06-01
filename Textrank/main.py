@@ -43,8 +43,8 @@ class textrank(pika):
     slides_width=3
     damping=0.85
     iteration_times=300
-    result_numbers=10
-    wikiFactor=2
+    result_numbers=7
+    wikiFactor=2.5
     def __init__(self,nm):
         super().__init__(nm)
     def word_cloud(self,filename):
@@ -65,29 +65,27 @@ class textrank(pika):
         K=self.slides_width
         self.G=dict()
         self.wiki=dict()
-        '''
-        print(cutlist)
-        for i in cutlist:
-            if i.__name__!="str":
-                print(i,"utf-8")
-                '''
-        print(cutlist)
-        wikiDealer=Dealer(cutlist)
+        T1=[]
+        for x in cutlist:
+            for y in x:
+                T1.append(y)
+        Twordslist=list(set(T1))
+        wikiDealer=Dealer(Twordslist)
         mat=wikiDealer.calculate()
-        for i in range(0,len(cutlist)):
-            p=cutlist[i]
+        for i in range(0,len(Twordslist)):
+            p=Twordslist[i]
             if mat[i][0]==-1:
                 self.wiki[p]=1.0
                 continue
             if not p in self.G:
                 self.G[p]=dict()
             self.wiki[p]=self.wikiFactor
-            tsum=0
+            tsu0
             for j in mat[i]:
                 tsum+=j
-            for j in range(0,len(cutlist)):
-                if not cutlist[j] in self.G[p]:
-                    self.G[p][cutlist[j]]=float(mat[i][j])/float(tsum)*self.wikiFactor
+            for j in range(0,len(Twordslist)):
+                if not Twordslist[j] in self.G[p]:
+                    self.G[p][Twordslist[j]]=float(mat[i][j])/float(tsum)*self.wikiFactor
         for s in cutlist:
             for i in range(0,len(s)):
                 p=s[i]
@@ -98,8 +96,6 @@ class textrank(pika):
                         self.G[p][s[j]]=1.0*self.wiki[s[j]]
                     else:
                         self.G[p][s[j]]+=1.0*self.wiki[s[j]]
-       
-            
     def print_graph(self):
         for i in self.G:
             print(i,':',self.G[i].items())
