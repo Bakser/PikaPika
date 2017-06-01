@@ -3,6 +3,7 @@ import sys
 import re
 import thulac
 import json
+import codecs
 from Searcher.searcher import *
 class pika:
     types={'n','np','ns','ni','nz','j'}#'a'
@@ -32,7 +33,7 @@ class pika:
             self.cut_s.append([x[0] for x in self.thu_cut.cut(i) if x[1] in
                                self.types])
     def prt(self):
-        fout=open('tst','w')
+        fout=codecs.open('tst','w',"utf-8")
         for i in self.sectences:
             fout.write(str([x[0] for x in self.thu_cut.cut(i) if x[1] in
                             self.types]))
@@ -57,7 +58,7 @@ class textrank(pika):
         res=[]
         for i in self.worddict:
             res.append((i,self.worddict[i]))
-        fout=open(filename,"w")
+        fout=codecs.open(filename,"w","utf-8")
         fout.write(json.dumps(res,ensure_ascii=False))
         fout.close()
         return
@@ -65,13 +66,9 @@ class textrank(pika):
         K=self.slides_width
         self.G=dict()
         self.wiki=dict()
-        '''
-        print(cutlist)
         for i in cutlist:
             if i.__name__!="str":
                 print(i,"utf-8")
-                '''
-        print(cutlist)
         wikiDealer=Dealer(cutlist)
         mat=wikiDealer.calculate()
         for i in range(0,len(cutlist)):
@@ -151,7 +148,7 @@ class parser:
     pat_abstract=re.compile(r"^(摘要|Abstract|abstract)")
     max_line_len=60
     def __init__(self,nm):
-        fin=open(nm,'r')
+        fin=codecs.open(nm,'r',"utf-8")
         self.lines=fin.read().split('\n')
         To_Filter=["\r","\n","\t"]
         for i in To_Filter:
@@ -228,7 +225,7 @@ class parser:
         return Res
     def output(self,filename):
         Res=self.build_tree()
-        fout=open(filename,"w")
+        fout=codecs.open(filename,"w","utf-8")
         fout.write("id,parentid,text,value\n")
         for i in range(0,len(Res)):
             if i==len(Res)-1:
@@ -249,10 +246,9 @@ if __name__=='__main__':
     tree_output = sys.argv[3]
     print("Input file:",inputfilename)
     print("Output file:",cloud_output,tree_output)
-    text_fin=open(inputfilename,"r")
+    text_fin=codecs.open(inputfilename,"r","utf-8")
     t=textrank(text_fin.read())
     print("Init...");
-    print(t.text)
     t.init()
     t.word_cloud(cloud_output)
     text_fin.close()

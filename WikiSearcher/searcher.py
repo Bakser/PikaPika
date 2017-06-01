@@ -3,7 +3,6 @@ import json
 import sys
 
 def word_to_path(word):
-    word = word.capitalize()
     lower = word.lower()
     path = "./articles/"+lower[0]+"/"
     if (len(word)>1):
@@ -18,12 +17,15 @@ def word_to_path(word):
     return path
 
 def search_word(word):
-    path = word_to_path(word)
+    print("word...",word)
+    path = word_to_path(word.capitalize())
+    with open('log.txt','w') as f:
+        f.write(path)
     try:
         with open(path,'r',encoding='utf-8') as f:
             return f.read()
     except Exception as e:
-        print("Didn't find word "+word)
+        #print("Didn't find word "+word)
         return None
 
 class Dealer:
@@ -32,7 +34,12 @@ class Dealer:
 
     def __init__(self,lst):
         if type(lst) == list:
-            self.lst = lst
+            self.lst = []
+            for w in lst:
+                if (type(w)==list):
+                    self.lst.extend(w)
+                else:
+                    self.lst.append(w)
         else:
             print(type(lst))
 
@@ -45,17 +52,17 @@ class Dealer:
             rres = []
             for j in range(0,len(self.text)):
                 if (self.text[j] == None):
-                    print("-1",end="\t")
+                    #print("-1",end="\t")
                     rres.append(-1)
                     continue
                 else:
                     cnt = self.text[j].count(self.lst[i])
-                    print(cnt,end="\t")
+                    #print(cnt,end="\t")
                     rres.append(cnt)
-            print ()
+           # print ()
             res.append(rres)
         return res
 
 if __name__ == '__main__':
-    D = Dealer(['ubuntu','apple','Linux'])
+    D = Dealer(['欧洲','亚洲','非洲'])
     D.calculate()

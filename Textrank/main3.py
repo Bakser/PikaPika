@@ -29,8 +29,7 @@ class pika:
                 last=i+1
         self.cut_s=[]
         for i in self.sectences:
-            self.cut_s.append([x[0] for x in self.thu_cut.cut(i) if x[1] in
-                               self.types])
+            self.cut_s.extend([x[0] for x in self.thu_cut.cut(i) if x[1] in self.types])
     def prt(self):
         fout=open('tst','w')
         for i in self.sectences:
@@ -71,7 +70,6 @@ class textrank(pika):
             if i.__name__!="str":
                 print(i,"utf-8")
                 '''
-        print(cutlist)
         wikiDealer=Dealer(cutlist)
         mat=wikiDealer.calculate()
         for i in range(0,len(cutlist)):
