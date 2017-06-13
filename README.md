@@ -2,18 +2,26 @@
 
 ##工程结构
 
+###LangConv
+
+处理简体字与繁体字的相互转换
+
+###Pikapika
+
+尝试的一些算法，都没有包含在最终的工程中
+
+###WikiSearcher
+
+通过trie树实现的离线Wiki词条搜索
+
 ###Textrank
 
-通过Textrank算法实现基于原文统计意义上的关键词提取
+通过Textrank实现的关键词提取算法
 
-###WordCutter
+###Wikidata
 
-通过开源分词算法对文章进行分词
-
-###WikiScrapy
-
-将关键词在Wiki上的搜索移植到scrapy框架下以提高效率（后来由于一些原因没有使用）
+Wiki离线数据
 
 ###Server
 
-网页版Pikapika的源代码，使用Nodejs编写
+网页版演示工程的源代码，使用Nodejs编写

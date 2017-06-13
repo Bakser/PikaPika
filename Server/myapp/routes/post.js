@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/text', function(req, res, next) {
-  res.render('post-form', {post_type: 'text' });
+		err = new Error('Post entry closed.');
+		next(err);
+		return ;
+		res.render('post-form', {post_type: 'text' });
 });
 
 router.post('/text', function(req, res, next) {
