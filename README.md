@@ -22,11 +22,11 @@
 
 ### Textrank
 
-通过Textrank实现的关键词提取算法
+后端算法，逻辑划分后结合Wikipedia数据的TextRank提取关键词
 
 ### Wikidata
 
-Wiki离线数据
+Wiki离线数据，原文件过大，只保留了软链接
 
 ### Server
 
